@@ -8,7 +8,7 @@ function runStreaks() {
     let width = box.offsetWidth;
 
     // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 20, bottom: 50, left: 20};
+    var margin = {top: 10, right: 20, bottom: 20, left: 20};
     width = width - margin.left - margin.right;
     var height = 500 - margin.top - margin.bottom;
 
