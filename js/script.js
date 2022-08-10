@@ -1,4 +1,6 @@
 const primaryColor = '#0024d9';
+const secondaryColor = 'red';
+const highlightColor = 'cyan';
 
 function runStreaks() {
 
@@ -44,8 +46,20 @@ function runStreaks() {
         .attr("r", 5)
         .attr("cx", function(d) { return x(d.days); })
         .attr("cy", function(d) { return y(d.age); })
-        .style('fill', function(d) { if (d.days > 10) return primaryColor; else return 'red'})
+        .style('fill', function(d) { if (d.days > 10) return primaryColor; else return secondaryColor})
         .style('opacity', function(d) { if (d.days > 10) return 0.5; else return 1})
+        .on('mouseover', function() {
+            d3.select(this).style('stroke', highlightColor).style('stroke-width', 3).raise();
+        })
+        .on('mouseout', function() {
+            d3.select(this).style('stroke', 'none');
+        })
+
+        // Handmade legend
+        svg.append("circle").attr("cx", x(18000)).attr("cy", y(25)).attr("r", 6).style("fill", secondaryColor);
+        svg.append("circle").attr("cx", x(18000)).attr("cy", y(20)).attr("r", 6).style("fill", primaryColor);
+        svg.append("text").attr("x", x(18300)).attr("y", y(25)).text("Me").style("font-size", "15px").attr("alignment-baseline","middle");
+        svg.append("text").attr("x", x(18300)).attr("y", y(20)).text("Not me").style("font-size", "15px").attr("alignment-baseline","middle");
 
         // Add the X Axis
         svg.append("g")
