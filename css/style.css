@@ -92,6 +92,11 @@ li {
     font-size: 20px; font-family: Georgia, "Sans-serif", serif;
     list-style-position: outside;
 }
+.source {
+    font-size: 12px;
+    color: gray;
+    margin-top: 0;
+}
 
 ::-moz-selection { /* Code for Firefox */
     background: #98ffff;
@@ -132,26 +137,19 @@ path {
     /* fill:  rgb(56, 56, 56); */
 }
 
-.y-axis-label {
-    font-size: 17px;
-    font-family: Arial, sans-serif;
-    text-anchor: middle;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none;
-}
 .x-axis-label {
-    font-size: 17px;
-    font-family: Arial, sans-serif;
-    text-anchor: middle;
-    alignment-baseline: middle;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none;
+    font-size: 14px;
+    text-anchor: end;
+    user-select: none;
+}
+.y-axis-label {
+    font-size: 14px;
+    text-anchor: start;
+    user-select: none;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
 }
