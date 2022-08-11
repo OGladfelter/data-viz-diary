@@ -95,27 +95,25 @@ function test() {
     .append("svg")
         .attr("width", width)
         .attr("height", height);
-        // .style('outline', '1px black solid')
 
-    // create dummy data -> just one element per circle
-    // const data = [{ "name": "A", "group": 1 }, { "name": "B", "group": 1 }, { "name": "C", "group": 1 }, { "name": "D", "group": 1 },
-    //             { "name": "G", "group": 4 }, { "name": "H", "group": 4 }, { "name": "I", "group": 2 }, { "name": "J", "group": 2 }, { "name": "K", "group": 2 }, { "name": "L", "group": 2 },
-    //             { "name": "M", "group": 3 }, { "name": "N", "group": 3 }, { "name": "O", "group": 3 }];
+    // names for the tooltip
+    const theirAnswers = ["China","India","United States","Indonesia","Pakistan","Nigeria","Brazil","Bangladesh","Russia","Mexico","Japan","Ethiopia","Philippines","Egypt","Vietnam","DR Congo","Iran","Turkey","Germany","France","United Kingdom","Thailand","South Africa","Tanzania","Italy","Myanmar","South Korea","Colombia","Kenya","Spain","Argentina","Algeria","Sudan","Uganda","Iraq","Ukraine","Canada","Poland","Morocco","Uzbekistan","Saudi Arabia","Peru","Angola","Afghanistan","Malaysia","Mozambique","Ghana","Yemen","Ivory Coast","Nepal","Venezuela","Madagascar","Australia","North Korea","Cameroon","Niger","Taiwan","Sri Lanka","Burkina Faso","Malawi","Mali","Chile","Kazakhstan","Romania","Zambia","Syria","Ecuador","Netherlands","Senegal","Guatemala","Chad","Somalia","Cambodia","Zimbabwe","South Sudan","Rwanda","Guinea","Burundi","Benin","Bolivia","Tunisia","Haiti","Belgium","Jordan","Cuba","Dominican Republic","Czech Republic","Sweden","Greece","Portugal","Azerbaijan","Hungary","Israel","Honduras","Tajikistan","United Arab Emirates","Belarus","Papua New Guinea","Austria","Switzerland","Sierra Leone","Togo","Hong Kong (China)","Paraguay","Laos","Libya","El Salvador","Serbia","Lebanon","Kyrgyzstan","Nicaragua","Bulgaria","Turkmenistan","Denmark","Congo","Central African Republic","Finland","Singapore","Norway","Slovakia","Palestine","Costa Rica","New Zealand","Ireland","Kuwait","Liberia","Oman","Panama","Mauritania","Croatia","Georgia","Eritrea","Uruguay","Mongolia","Bosnia and Herzegovina","Puerto Rico (United States)","Armenia","Lithuania","Albania","Qatar","Jamaica","Moldova","Namibia","Gambia","Botswana","Gabon","Lesotho","Slovenia","Latvia","North Macedonia","Kosovo","Guinea-Bissau","Equatorial Guinea","Bahrain","Trinidad and Tobago","Estonia","East Timor","Mauritius","Eswatini","Djibouti","Cyprus","Fiji","Comoros","Bhutan","Guyana","Solomon Islands","Macau (China)","Luxembourg","Montenegro","Western Sahara","Suriname","Cape Verde","Malta","Belize","Brunei","Bahamas","Maldives","Northern Cyprus","Iceland","Transnistria","Vanuatu","Barbados","French Polynesia (France)","New Caledonia (France)","Abkhazia","São Tomé and Príncipe","Samoa","Saint Lucia","Guam (United States)","Curaçao (Netherlands)","Artsakh","Kiribati","Grenada","Aruba (Netherlands)","Saint Vincent and the Grenadines","Jersey (British Crown Dependency)","Micronesia","Tonga","Antigua and Barbuda","Seychelles","U.S. Virgin Islands (United States)","Isle of Man (British Crown Dependency)","Andorra","Dominica","Cayman Islands (United Kingdom)","Bermuda (United Kingdom)","Guernsey (British Crown Dependency)","Greenland (Denmark)","Marshall Islands","Saint Kitts and Nevis","Faroe Islands (Denmark)","South Ossetia","American Samoa (United States)","Northern Mariana Islands (United States)","Turks and Caicos Islands (United Kingdom)","Sint Maarten (Netherlands)","Liechtenstein","Monaco","Gibraltar (United Kingdom)","San Marino","Saint Martin (France)","Åland (Finland)","British Virgin Islands (United Kingdom)","Palau","Cook Islands","Anguilla (United Kingdom)","Nauru","Wallis and Futuna (France)","Tuvalu","Saint Barthélemy (France)","Saint Helena, Ascension and Tristan da Cunha (United Kingdom)","Saint Pierre and Miquelon (France)","Montserrat (United Kingdom)","Falkland Islands (United Kingdom)","Christmas Island (Australia)","Norfolk Island (Australia)","Niue","Tokelau (New Zealand)","Vatican City","Cocos (Keeling) Islands (Australia)","Pitcairn Islands (United Kingdom)"];
+    const myAnswers = ['Prussia...?', "Is it 'England' or 'Britain'?", "I think we're at war with this one?", "The one I live in", "They taught us propaganda about this one in 2nd grade"];
 
     const data = [];
     const numCountries = 195;
 
     for (let i = 0; i < 195 * .95; i++) {
-        data.push({'name':i, 'group':1});
+        data.push({'name':theirAnswers[i], 'group':1});
     }
     for (let i = 0; i < 195 * .75; i++) {
-        data.push({'name':i, 'group':2});
+        data.push({'name':theirAnswers[i], 'group':2});
     }
     for (let i = 0; i < 195 * .5; i++) {
-        data.push({'name':i, 'group':3});
+        data.push({'name':theirAnswers[i], 'group':3});
     }
     for (let i = 0; i < 195 * .1; i++) {
-        data.push({'name':i, 'group':4});
+        data.push({'name':myAnswers[i % myAnswers.length], 'group':4});
     }
 
     // A scale that gives a Y target position for each group
@@ -128,6 +126,8 @@ function test() {
         .domain([1, 2, 3, 4])
         .range([ "#26f0f1", "#e75a7c", "#5438dc", "#f0b67f"]);
 
+    const tooltip = d3.select("#tooltip");
+
     // Initialize the circle: all located at the center of the svg area
     const node = svg.append("g")
         .selectAll("circle")
@@ -139,7 +139,18 @@ function test() {
             .style("fill", d => color(d.group))
             .style("fill-opacity", 0.75)
             .attr("stroke", "black")
-            .style("stroke-width", 1);
+            .style("stroke-width", 1)
+            .on("mouseover", function(event, d) {
+                tooltip.html(d.name)
+                .style('left', d.x + 'px')
+                    .style('top', d.y + 'px')
+                    .transition()
+                    .duration(250)
+                    .style('opacity', 1);
+            })
+            .on("mouseout", function() {
+                tooltip.transition().duration(250).style('opacity', 0);
+            });
 
     // Features of the forces applied to the nodes:
     var simulation = d3.forceSimulation()
