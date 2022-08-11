@@ -6,11 +6,12 @@
 		<title>Data Viz Diary</title>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="https://d3js.org/d3.v7.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1/dist/chart.xkcd.min.js"></script>
 		<script src="https://unpkg.com/rough-viz@1.0.6"></script>
 	</head>
 	<body>
-		<div class="entries">
+		<div class="entries" id="entries">
 			<h1>hello world</h1>
 			<div class="entry">
 				<article>
@@ -27,16 +28,18 @@
 					<p>Feb 3, 2022</p>
 					<div style="width:50%; float:right; position:sticky; top:0;">
 						<div id="packedCountryCircles"></div>
+						<hr id="boundary" style="visibility:hidden;">
 						<div id="tooltip" class="tooltip"></div>
 					</div>
 					<div style="width:50%;">
 						<article>
-							<p class="bottom-space">Today at work a few coworkers and I took this world geography quiz to see how many countries you can fill in on a blank world map. It sounded like fun at first, but then we all compared our scores…</p>
-							<p class="bottom-space">Here's how many countries <mark style="background-color:#26f1f182;">Elena</mark> correctly placed on the map:</p>
-							<p class="bottom-space">And here's how many <mark style="background-color:#e75a7b7a;">Abdur</mark> got:</p>
-							<p class="bottom-space">And <mark style="background-color:#5338dc7d;">Jaiden</mark>:</p>
+							<p class="bottom-space">I went into the office today.</p>
+							<p class="bottom-space">During lunch a few coworkers and I took this world geography quiz to see how many countries you can fill in on a blank world map. It sounded like fun at first, but then we all compared our scores…</p>
+							<p class="bottom-space" id="countryStep1">Here's how many countries <mark style="background-color:#26f1f182;">Elena</mark> correctly placed on the map:</p>
+							<p class="bottom-space" id="countryStep2">And here's how many <mark style="background-color:#e75a7b7a;">Abdur</mark> got:</p>
+							<p class="bottom-space" id="countryStep3">And <mark style="background-color:#5338dc7d;">Jaiden</mark>:</p>
 							<p class="bottom-space">Then it was my turn to share, and geeze that was embarrassing.</p>
-							<p class="bottom-space">So how many did <mark style="background-color:#f0b67f75;">I</mark> get?</p>
+							<p class="bottom-space" id="countryStep4">So how many did <mark style="background-color:#f0b67f75;">I</mark> get?</p>
 							<p class="bottom-space" style="font-size:60px;">&#x1F62D;</p>
 						</article>
 					</div>

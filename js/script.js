@@ -137,7 +137,9 @@ function packedCountryCircles() {
             .attr("cx", width / 2)
             .attr("cy", height / 2)
             .style("fill", d => color(d.group))
-            .style("fill-opacity", 0.75)
+            .attr('class', d => 'countryCircle' + d.group)
+            .style('opacity', 0)
+            // .style("fill-opacity", .75)
             .attr("stroke", "black")
             .style("stroke-width", 1)
             .on("mouseover", function(event, d) {
@@ -198,3 +200,22 @@ function xkcdChart() {
 runStreaks();
 packedCountryCircles();
 xkcdChart();
+
+function handleScroll() {
+    if($('#countryStep1').offset().top < $('#boundary').offset().top) {
+        d3.selectAll('.countryCircle1').transition().duration(1000).style('opacity', .75);
+    }
+    if($('#countryStep2').offset().top < $('#boundary').offset().top) {
+        d3.selectAll('.countryCircle2').transition().duration(1000).style('opacity', .75);
+    }
+    if($('#countryStep3').offset().top < $('#boundary').offset().top) {
+        d3.selectAll('.countryCircle3').transition().duration(1000).style('opacity', .75);
+    }
+    if($('#countryStep4').offset().top < $('#boundary').offset().top) {
+        d3.selectAll('.countryCircle4').transition().duration(1000).style('opacity', .75);
+    }
+}
+
+document.getElementById('entries').addEventListener("scroll", function () {
+    handleScroll();
+}, false);

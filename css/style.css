@@ -32,7 +32,7 @@ body {
 .entries::before {
     content: '';
     width: 2px;
-    height: 200vh;
+    height: 1100vh;
     position: absolute;
     top: 0;
     left: 40px;
