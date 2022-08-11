@@ -6,7 +6,7 @@
 		<title>Data Viz Diary</title>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="https://d3js.org/d3.v7.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1/dist/chart.xkcd.min.js"></script>
 		<script src="https://unpkg.com/rough-viz@1.0.6"></script>
 	</head>
 	<body>
@@ -45,12 +45,24 @@
 			<div class="entry">
 				<article>
 					<p>March 6, 2022</p>
+					<p>I'm thinking about writing a book. They say you should write about what you know.</p>
+					<div style="width:50%; text-align:center; margin:auto;">
+						<svg id="xkcdLineplot"></svg>
+					</div>
+					<p>But seriously, why is it that over time we have fewer and fewer friends, but the number of people who dislike you only grows?</p>
+					<p>Like, I don't talk to half of my friends anymore, but I'm pretty sure Billy from elementary school still hates me for stealing his football.</p>
+				</article>
+			</div>
+			<div class="entry">
+				<article>
+					<p>March 6, 2022</p>
 					<div>
 						<div style="width:50%; float:right; position:sticky; top:0;">
-							<svg id="xkcdLineplot"></svg>
+							<div id="viz0"></div>
 						</div>
 						<div style="width:50%;">
 							<article>
+								<p>I'm thinking about writing a book. They say you should write about what you know.</p>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 							</article>
@@ -64,7 +76,6 @@
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 				</article>
-				<div id="viz0"></div>
 				<div id="viz1"></div>
 				<script>
 					// create Bar chart from csv file, using default options

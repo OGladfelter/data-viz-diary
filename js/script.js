@@ -84,7 +84,7 @@ function runStreaks() {
     });
 }
 
-function test() {
+function packedCountryCircles() {
     // set the dimensions and margins of the graph
     let box = document.getElementById('packedCountryCircles');
     let width = box.offsetWidth;
@@ -186,11 +186,15 @@ function xkcdChart() {
         },
         options: {
             yTickCount: 3,
-            legendPosition: chartXkcd.config.positionType.upLeft
+            legendPosition: chartXkcd.config.positionType.upLeft,
+            dataColors: [primaryColor],
+            backgroundColor: 'none',
+            strokeColor: 'rgb(50,50,100)',
+            showLegend: false
         }
     });
 }
 
 runStreaks();
-test();
+packedCountryCircles();
 xkcdChart();

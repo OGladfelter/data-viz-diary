@@ -138,7 +138,10 @@ button:disabled {
 
 path { 
     stroke: rgb(56, 56, 56);
-    /* fill:  rgb(56, 56, 56); */
+}
+
+svg {
+    user-select: none;
 }
 
 .x-axis-label {
