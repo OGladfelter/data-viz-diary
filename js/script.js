@@ -174,20 +174,17 @@ function xkcdChart() {
     const svg = document.getElementById('xkcdLineplot');
 
     new chartXkcd.Line(svg, {
-        title: 'Monthly income of an indie developer', // optional
-        xLabel: 'Month', // optional
-        yLabel: '$ Dollors', // optional
+        title: 'How to make enemies and irritate people',
+        xLabel: 'Time',
+        yLabel: 'Enemies',
         data: {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
         datasets: [{
-            label: 'Plan',
-            data: [30, 70, 200, 300, 500, 800, 1500, 2900, 5000, 8000],
-        }, {
-            label: 'Reality',
-            data: [0, 1, 30, 70, 80, 100, 50, 80, 40, 150],
+            label: 'Enemies',
+            data: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81],
         }],
         },
-        options: { // optional
+        options: {
             yTickCount: 3,
             legendPosition: chartXkcd.config.positionType.upLeft
         }
