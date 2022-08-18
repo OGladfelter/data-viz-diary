@@ -6,11 +6,13 @@
 		<title>Data Viz Diary</title>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="https://d3js.org/d3.v7.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1/dist/chart.xkcd.min.js"></script>
 		<script src="https://unpkg.com/rough-viz@1.0.6"></script>
+		<script src="js/noframework.waypoints.min.js"></script>
 	</head>
 	<body>
-		<div class="entries">
+		<div class="entries" id="entries">
 			<h1>hello world</h1>
 			<div class="entry">
 				<article>
@@ -22,43 +24,61 @@
 					<p>So now I feel both unaccomplished and old. Great.</p>
 				</article>
 			</div>
-			<div id="entry1" class="entry">
+			<div class="entry">
+				<article>
+					<p>Feb 3, 2022</p>
+					<div style="width:50%; float:right; position:sticky; top:0;">
+						<div id="packedCountryCircles"></div>
+						<div id="tooltip" class="tooltip"></div>
+					</div>
+					<div style="width:50%;">
+						<article>
+							<p class="bottom-space">I went into the office today.</p>
+							<p class="bottom-space">During lunch a few coworkers and I took this world geography quiz to see how many countries you can fill in on a blank world map. It sounded like fun at first, but then we all compared our scores…</p>
+							<p class="bottom-space" id="countryStep1">Here's how many countries <mark style="background-color:#26f1f182;">Elena</mark> correctly placed on the map:</p>
+							<p class="bottom-space" id="countryStep2">And here's how many <mark style="background-color:#e75a7b7a;">Abdur</mark> got:</p>
+							<p class="bottom-space" id="countryStep3">And <mark style="background-color:#5338dc7d;">Jayden</mark>:</p>
+							<p class="bottom-space">Then it was my turn to share, and geeze that was embarrassing.</p>
+							<p class="bottom-space" id="countryStep4">So how many did <mark style="background-color:#f0b67f75;">I</mark> get?</p>
+							<p class="bottom-space" style="font-size:60px;">&#x1F62D;</p>
+						</article>
+					</div>
+				</article>
+			</div>
+			<div class="entry">
 				<article>
 					<p>March 6, 2022</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
+					<p>I'm thinking about writing a book. They say you should write about what you know.</p>
+					<div style="width:50%; text-align:center; margin:auto;">
+						<svg id="xkcdLineplot"></svg>
+					</div>
+					<p>But seriously, why is it that over time we have fewer and fewer friends, but the number of people who dislike you only grows?</p>
+					<p>Like, I don't talk to half of my friends anymore, but I'm pretty sure Billy from elementary school still hates me for stealing his football.</p>
 				</article>
-				<svg class="line-chart"></svg>
-				<script>
-						const svg = document.querySelector('.line-chart')
-
-						const lineChart = new chartXkcd.Line(svg, {
-							title: 'Monthly income of an indie developer', // optional
-							xLabel: 'Month', // optional
-							yLabel: '$ Dollors', // optional
-							data: {
-							labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-							datasets: [{
-								label: 'Plan',
-								data: [30, 70, 200, 300, 500, 800, 1500, 2900, 5000, 8000],
-							}, {
-								label: 'Reality',
-								data: [0, 1, 30, 70, 80, 100, 50, 80, 40, 150],
-							}],
-							},
-							options: { // optional
-								yTickCount: 3,
-								legendPosition: chartXkcd.config.positionType.upLeft
-							}
-						});
-				</script>
 			</div>
-			<div id="entry2" class="entry">
+			<div class="entry">
+				<article>
+					<p>March 6, 2022</p>
+					<div>
+						<div style="width:50%; float:right; position:sticky; top:0;">
+							<div id="viz0"></div>
+						</div>
+						<div style="width:50%;">
+							<article>
+								<p>I'm thinking about writing a book. They say you should write about what you know.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
+							</article>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="entry">
 				<article>
 					<p>March 8, 2022</p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
 				</article>
-				<div id="viz0"></div>
 				<div id="viz1"></div>
 				<script>
 					// create Bar chart from csv file, using default options
@@ -88,13 +108,6 @@
 					}
 					);
 				</script>
-			</div>
-			<div id="entry3" class="entry">
-				<article>
-					<p>March 10, 2022</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
-				</article>
 			</div>
 		</div>
 		<div style="width:50%; text-align:center; margin:auto;">

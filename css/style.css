@@ -2,6 +2,10 @@ html {
     scroll-behavior: smooth;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     text-align: center;
     line-height: 160%; 
@@ -13,7 +17,7 @@ body {
 }
 
 .entries {
-    height: 75vh;
+    height: 85vh;
     background-color: whitesmoke;
     overflow-y: scroll;
     width: 75vw;
@@ -28,7 +32,7 @@ body {
 .entries::before {
     content: '';
     width: 2px;
-    height: 200vh;
+    height: 1100vh;
     position: absolute;
     top: 0;
     left: 40px;
@@ -134,7 +138,10 @@ button:disabled {
 
 path { 
     stroke: rgb(56, 56, 56);
-    /* fill:  rgb(56, 56, 56); */
+}
+
+svg {
+    user-select: none;
 }
 
 .x-axis-label {
@@ -152,4 +159,22 @@ path {
     fill: none;
     stroke: steelblue;
     stroke-width: 2px;
+}
+
+.bottom-space {
+    margin-bottom: 25vh;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    min-width: 50px;
+    max-width: 150px;
+    padding: 5px;
+    font: 12px;
+    background: white;
+    border: 1px black solid;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
 }
