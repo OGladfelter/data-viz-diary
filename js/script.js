@@ -201,21 +201,39 @@ runStreaks();
 packedCountryCircles();
 xkcdChart();
 
-function handleScroll() {
-    if($('#countryStep1').offset().top < $('#boundary').offset().top) {
-        d3.selectAll('.countryCircle1').transition().duration(1000).style('opacity', .75);
-    }
-    if($('#countryStep2').offset().top < $('#boundary').offset().top) {
-        d3.selectAll('.countryCircle2').transition().duration(1000).style('opacity', .75);
-    }
-    if($('#countryStep3').offset().top < $('#boundary').offset().top) {
-        d3.selectAll('.countryCircle3').transition().duration(1000).style('opacity', .75);
-    }
-    if($('#countryStep4').offset().top < $('#boundary').offset().top) {
-        d3.selectAll('.countryCircle4').transition().duration(1000).style('opacity', .75);
-    }
-}
-
-document.getElementById('entries').addEventListener("scroll", function () {
-    handleScroll();
-}, false);
+new Waypoint({
+    element: document.getElementById('countryStep1'),
+    handler: function(direction) {
+        const opacity = direction == 'down' ? .75 : 0;
+        d3.selectAll('.countryCircle1').transition().duration(1000).style('opacity', opacity);
+    },
+    context: document.getElementById('entries'),
+    offset: '50%'
+});
+new Waypoint({
+    element: document.getElementById('countryStep2'),
+    handler: function(direction) {
+        const opacity = direction == 'down' ? .75 : 0;
+        d3.selectAll('.countryCircle2').transition().duration(1000).style('opacity', opacity);
+    },
+    context: document.getElementById('entries'),
+    offset: '50%'
+});
+new Waypoint({
+    element: document.getElementById('countryStep3'),
+    handler: function(direction) {
+        const opacity = direction == 'down' ? .75 : 0;
+        d3.selectAll('.countryCircle3').transition().duration(1000).style('opacity', opacity);
+    },
+    context: document.getElementById('entries'),
+    offset: '50%'
+});
+new Waypoint({
+    element: document.getElementById('countryStep4'),
+    handler: function(direction) {
+        const opacity = direction == 'down' ? .75 : 0;
+        d3.selectAll('.countryCircle4').transition().duration(1000).style('opacity', opacity);
+    },
+    context: document.getElementById('entries'),
+    offset: '50%'
+});
