@@ -205,7 +205,7 @@ function readGPXdata(fileName1, fileName2) {
         d3.select(xml).selectAll("trk").selectAll("trkseg").selectAll("trkpt").each(function() {
             var lat = parseFloat(d3.select(this).attr("lat"));
             var lon = parseFloat(d3.select(this).attr("lon"));
-            var latLon = [lon, lat];
+            var latLon = [lat, lon];
             var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
             
             data.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
@@ -219,7 +219,7 @@ function readGPXdata(fileName1, fileName2) {
             d3.select(xml2).selectAll("trk").selectAll("trkseg").selectAll("trkpt").each(function() {
                 var lat = parseFloat(d3.select(this).attr("lat"));
                 var lon = parseFloat(d3.select(this).attr("lon"));
-                var latLon = [lon, lat];
+                var latLon = [lat, lon];
                 var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
                 
                 data2.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
@@ -253,26 +253,26 @@ function mapGPXfiles(data, data2, coords, coords2) {
     // append the svg obgect to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg = d3.select("#flybyMap").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // var svg = d3.select("#flybyMap").append("svg")
+    //     .attr("width", width + margin.left + margin.right)
+    //     .attr("height", height + margin.top + margin.bottom)
+    //     .append("g")
+    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // leaflet stuff - create lines, generate map, add lines to map, set map to correct bounds
     var polyline = L.polyline(coords, {
         color: primaryColor,
-        weight: 3,
+        weight: 2,
         smoothFactor: 1
     });
     var polyline2 = L.polyline(coords2, {
         color: secondaryColor,
-        weight: 3,
+        weight: 2,
         smoothFactor: 1
     })
 
     var map = L.map('flybyMap');
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png').addTo(map);
+    L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png').addTo(map);
 
     polyline.addTo(map);
     polyline2.addTo(map);
@@ -287,45 +287,35 @@ function mapGPXfiles(data, data2, coords, coords2) {
     map.dragging.disable();
     $(".leaflet-control-zoom").css("visibility", "hidden");
 
-    // set the ranges
-    // var x = d3.scaleLinear().domain(d3.extent(combined, function(d) { return d.lon; })).range([margin.left, width - margin.right]);
-    // var y = d3.scaleLinear().domain(d3.extent(combined, function(d) { return d.lat; })).range([height, 0]);
-    // define the line
-    // var runPath = d3.line()
-    //     .x(function(d) { return x(d.lon); })
-    //     .y(function(d) { return y(d.lat); });
-    // svg.append("path")
-    //     .data([data])
-    //     .attr("class", "line")
-    //     .attr("d", runPath);
-    // svg.append("path")
-    //     .data([data2])
-    //     .attr("class", "line")
-    //     .style("stroke", secondaryColor)
-    //     .attr("d", runPath);
+    // plot the 'current point' circle
+	// grab SVG from the map object
+	var svg = d3.select("#flybyMap").select("svg"),
+	g = svg.append("g");
 
-    pathGeometry = { "type": "LineString", "coordinates": coords };
-    pathGeometry2 = { "type": "LineString", "coordinates": coords2 };
-    
-    // Map projection stuffs
-    const projection = d3.geoMercator()
-        .scale(85)
-        .translate([width/2, height/2*1.3])
+    g.append("circle")
+        .style("stroke", "black")  
+        .style("opacity", .6) 
+        .style("fill", primaryColor)
+        .attr("r", 10)
+        .attr('cx', map.latLngToLayerPoint(data[0].latLon).x)
+        .attr('cy', map.latLngToLayerPoint(data[0].latLon).y);	
+    g.append("circle")
+        .style("stroke", "black")  
+        .style("opacity", .6) 
+        .style("fill", secondaryColor)
+        .attr("r", 10)
+        .attr('cx', map.latLngToLayerPoint(data2[0].latLon).x)
+        .attr('cy', map.latLngToLayerPoint(data2[0].latLon).y);
 
-    const path = d3.geoPath().projection(projection);
-
-    var b = path.bounds(pathGeometry); // [[left, top],[right, bottom]]
-    // console.log(b);
-	var c = d3.geoCentroid(pathGeometry);
-    // console.log(c);
-
-    svg.append("path")
-      .attr("d", path(pathGeometry))
-      .style("fill", "none")
-      .style("stroke", "orange")
-      .style("stroke-width", 7)
-	
-	
+    // g.selectAll("circle")
+    //     .data(data)
+    //     .enter().append("circle")
+    //     .style("stroke", "black")  
+    //     .style("opacity", .6) 
+    //     .style("fill", "cyan")
+    //     .attr("r", 10)
+    //     .attr('cx', function(d) { return map.latLngToLayerPoint(d.latLon).x})
+    //     .attr('cy', function(d) { return map.latLngToLayerPoint(d.latLon).y});	
 }
 
 function main() {
