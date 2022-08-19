@@ -136,9 +136,7 @@ button:disabled {
     cursor: default;
 }
 
-path { 
-    stroke: rgb(56, 56, 56);
-}
+
 
 svg {
     user-select: none;
@@ -157,7 +155,7 @@ svg {
 
 .line {
     fill: none;
-    stroke: steelblue;
+    stroke: #0024d9;
     stroke-width: 2px;
 }
 
@@ -177,4 +175,8 @@ div.tooltip {
     border-radius: 4px;
     pointer-events: none;
     opacity: 0;
+}
+
+.leaflet-container {
+    background: none !important;
 }
