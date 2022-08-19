@@ -208,7 +208,7 @@ function readGPXdata(fileName1, fileName2) {
             var latLon = [lat, lon];
             var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
             
-            data.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
+            data.push({'runner':'oliver', 'latLon':latLon, 'timeStamp':timeStamp});
             coords.push([lat, lon]);
         });
 
@@ -222,7 +222,7 @@ function readGPXdata(fileName1, fileName2) {
                 var latLon = [lat, lon];
                 var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
                 
-                data2.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
+                data2.push({'runner':'tom', 'latLon':latLon, 'timeStamp':timeStamp});
                 coords2.push([lat, lon]);
             });
 
@@ -233,13 +233,9 @@ function readGPXdata(fileName1, fileName2) {
 
 function mapGPXfiles(data, data2, coords, coords2) {
 
-    // console.log(data);
-    // console.log(data2);
-
     const combined = data.concat(data2);
-
-    // between both activities, get the earliest and latest timestamps
-    const minMaxDates = d3.extent(combined, function(d) { return d.timeStamp; });
+    combined.sort((a, b) => d3.ascending(a.timeStamp, b.timeStamp));
+    console.log(combined);
 
     // set up the plot space
     let box = document.getElementById('flybyMap');
@@ -249,15 +245,6 @@ function mapGPXfiles(data, data2, coords, coords2) {
     var margin = {top: 10, right: 20, bottom: 20, left: 20};
     width = width - margin.left - margin.right;
     var height = width - margin.top - margin.bottom;
-
-    // append the svg obgect to the body of the page
-    // appends a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
-    // var svg = d3.select("#flybyMap").append("svg")
-    //     .attr("width", width + margin.left + margin.right)
-    //     .attr("height", height + margin.top + margin.bottom)
-    //     .append("g")
-    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // leaflet stuff - create lines, generate map, add lines to map, set map to correct bounds
     var polyline = L.polyline(coords, {
@@ -292,14 +279,15 @@ function mapGPXfiles(data, data2, coords, coords2) {
 	var svg = d3.select("#flybyMap").select("svg"),
 	g = svg.append("g");
 
-    g.append("circle")
+    var oliverCircle = g.append("circle")
         .style("stroke", "black")  
         .style("opacity", .6) 
         .style("fill", primaryColor)
         .attr("r", 10)
         .attr('cx', map.latLngToLayerPoint(data[0].latLon).x)
-        .attr('cy', map.latLngToLayerPoint(data[0].latLon).y);	
-    g.append("circle")
+        .attr('cy', map.latLngToLayerPoint(data[0].latLon).y);
+
+    var tomCircle = g.append("circle")
         .style("stroke", "black")  
         .style("opacity", .6) 
         .style("fill", secondaryColor)
@@ -307,15 +295,37 @@ function mapGPXfiles(data, data2, coords, coords2) {
         .attr('cx', map.latLngToLayerPoint(data2[0].latLon).x)
         .attr('cy', map.latLngToLayerPoint(data2[0].latLon).y);
 
-    // g.selectAll("circle")
-    //     .data(data)
-    //     .enter().append("circle")
-    //     .style("stroke", "black")  
-    //     .style("opacity", .6) 
-    //     .style("fill", "cyan")
-    //     .attr("r", 10)
-    //     .attr('cx', function(d) { return map.latLngToLayerPoint(d.latLon).x})
-    //     .attr('cy', function(d) { return map.latLngToLayerPoint(d.latLon).y});	
+    // between both activities, get the earliest and latest timestamps
+    const minMaxTimeStamps = d3.extent(combined, function(d) { return d.timeStamp; });
+
+    // used for moving the circle around
+	var latScale = d3.scaleTime().domain(data.map(function (d) {return d.timeStamp.getTime() / 1000})).range(data.map(function (d) {return d.latLon[0]})).clamp(true);
+    var lonScale = d3.scaleTime().domain(data.map(function (d) {return d.timeStamp.getTime() / 1000})).range(data.map(function (d) {return d.latLon[1]})).clamp(true);
+	var latScale2 = d3.scaleTime().domain(data2.map(function (d) {return d.timeStamp.getTime() / 1000})).range(data2.map(function (d) {return d.latLon[0]})).clamp(true);
+	var lonScale2 = d3.scaleTime().domain(data2.map(function (d) {return d.timeStamp.getTime() / 1000})).range(data2.map(function (d) {return d.latLon[1]})).clamp(true);
+
+    var dur = 100;
+
+    // this is not very performant
+    for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=2, z++) {
+        var latLon1 = [latScale(i), lonScale(i)];
+        var layerPoint1 = map.latLngToLayerPoint(latLon1);
+        var latLon2 = [latScale2(i), lonScale2(i)];
+        var layerPoint2 = map.latLngToLayerPoint(latLon2);
+        oliverCircle
+            .transition()
+            .duration(dur)
+            .delay(dur / 5 * z)
+            .attr('cx', layerPoint1.x)
+            .attr('cy', layerPoint1.y);
+        tomCircle
+            .transition()
+            .duration(dur)
+            .delay(dur / 5 * z)
+            .attr('cx', layerPoint2.x)
+            .attr('cy', layerPoint2.y);
+        console.log(z);
+    };
 }
 
 function main() {
