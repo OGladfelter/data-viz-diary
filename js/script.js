@@ -233,10 +233,6 @@ function readGPXdata(fileName1, fileName2) {
 
 function mapGPXfiles(data, data2, coords, coords2) {
 
-    const combined = data.concat(data2);
-    combined.sort((a, b) => d3.ascending(a.timeStamp, b.timeStamp));
-    console.log(combined);
-
     // set up the plot space
     let box = document.getElementById('flybyMap');
     let width = box.offsetWidth;
@@ -298,7 +294,7 @@ function mapGPXfiles(data, data2, coords, coords2) {
         .attr('cy', map.latLngToLayerPoint(data2[0].latLon).y);
 
     // between both activities, get the earliest and latest timestamps
-    const minMaxTimeStamps = d3.extent(combined, function(d) { return d.timeStamp; });
+    const minMaxTimeStamps = d3.extent(data.concat(data2), function(d) { return d.timeStamp; });
 
     // used for moving the circle around
 	var latScale = d3.scaleTime().domain(data.map(function (d) {return d.timeStamp.getTime() / 1000})).range(data.map(function (d) {return d.latLon[0]})).clamp(true);
