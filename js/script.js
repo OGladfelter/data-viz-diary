@@ -197,43 +197,181 @@ function xkcdChart() {
     });
 }
 
-runStreaks();
-packedCountryCircles();
-xkcdChart();
+function readGPXdata(fileName1, fileName2) {
+	d3.xml("data/" + fileName1 + ".gpx").then((xml) => {
 
-new Waypoint({
-    element: document.getElementById('countryStep1'),
-    handler: function(direction) {
-        const opacity = direction == 'down' ? .75 : 0;
-        d3.selectAll('.countryCircle1').transition().duration(1000).style('opacity', opacity);
-    },
-    context: document.getElementById('entries'),
-    offset: '50%'
-});
-new Waypoint({
-    element: document.getElementById('countryStep2'),
-    handler: function(direction) {
-        const opacity = direction == 'down' ? .75 : 0;
-        d3.selectAll('.countryCircle2').transition().duration(1000).style('opacity', opacity);
-    },
-    context: document.getElementById('entries'),
-    offset: '50%'
-});
-new Waypoint({
-    element: document.getElementById('countryStep3'),
-    handler: function(direction) {
-        const opacity = direction == 'down' ? .75 : 0;
-        d3.selectAll('.countryCircle3').transition().duration(1000).style('opacity', opacity);
-    },
-    context: document.getElementById('entries'),
-    offset: '50%'
-});
-new Waypoint({
-    element: document.getElementById('countryStep4'),
-    handler: function(direction) {
-        const opacity = direction == 'down' ? .75 : 0;
-        d3.selectAll('.countryCircle4').transition().duration(1000).style('opacity', opacity);
-    },
-    context: document.getElementById('entries'),
-    offset: '50%'
-});
+        var data = [];
+        var coords = [];
+        d3.select(xml).selectAll("trk").selectAll("trkseg").selectAll("trkpt").each(function() {
+            var lat = parseFloat(d3.select(this).attr("lat"));
+            var lon = parseFloat(d3.select(this).attr("lon"));
+            var latLon = [lon, lat];
+            var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
+            
+            data.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
+            coords.push([lat, lon]);
+        });
+
+		d3.xml("data/" + fileName2 + ".gpx").then((xml2) => {
+
+            var data2 = [];
+            var coords2 = [];
+            d3.select(xml2).selectAll("trk").selectAll("trkseg").selectAll("trkpt").each(function() {
+                var lat = parseFloat(d3.select(this).attr("lat"));
+                var lon = parseFloat(d3.select(this).attr("lon"));
+                var latLon = [lon, lat];
+                var timeStamp = !d3.select(this).select("time").node() ? null : new Date(d3.select(this).select("time").text());
+                
+                data2.push({'lat': lat, 'lon':lon, 'latLon':latLon, 'timeStamp':timeStamp});
+                coords2.push([lat, lon]);
+            });
+
+			mapGPXfiles(data, data2, coords, coords2);
+		});
+	});
+};
+
+function mapGPXfiles(data, data2, coords, coords2) {
+
+    // console.log(data);
+    // console.log(data2);
+
+    const combined = data.concat(data2);
+
+    // between both activities, get the earliest and latest timestamps
+    const minMaxDates = d3.extent(combined, function(d) { return d.timeStamp; });
+
+    // set up the plot space
+    let box = document.getElementById('flybyMap');
+    let width = box.offsetWidth;
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 20, bottom: 20, left: 20};
+    width = width - margin.left - margin.right;
+    var height = width - margin.top - margin.bottom;
+
+    // append the svg obgect to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg = d3.select("#flybyMap").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // leaflet stuff - create lines, generate map, add lines to map, set map to correct bounds
+    var polyline = L.polyline(coords, {
+        color: primaryColor,
+        weight: 3,
+        smoothFactor: 1
+    });
+    var polyline2 = L.polyline(coords2, {
+        color: secondaryColor,
+        weight: 3,
+        smoothFactor: 1
+    })
+
+    var map = L.map('flybyMap');
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png').addTo(map);
+
+    polyline.addTo(map);
+    polyline2.addTo(map);
+
+    bounds = L.latLngBounds(coords.concat(coords2));
+    map.fitBounds(bounds);
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    map.dragging.disable();
+    $(".leaflet-control-zoom").css("visibility", "hidden");
+
+    // set the ranges
+    // var x = d3.scaleLinear().domain(d3.extent(combined, function(d) { return d.lon; })).range([margin.left, width - margin.right]);
+    // var y = d3.scaleLinear().domain(d3.extent(combined, function(d) { return d.lat; })).range([height, 0]);
+    // define the line
+    // var runPath = d3.line()
+    //     .x(function(d) { return x(d.lon); })
+    //     .y(function(d) { return y(d.lat); });
+    // svg.append("path")
+    //     .data([data])
+    //     .attr("class", "line")
+    //     .attr("d", runPath);
+    // svg.append("path")
+    //     .data([data2])
+    //     .attr("class", "line")
+    //     .style("stroke", secondaryColor)
+    //     .attr("d", runPath);
+
+    pathGeometry = { "type": "LineString", "coordinates": coords };
+    pathGeometry2 = { "type": "LineString", "coordinates": coords2 };
+    
+    // Map projection stuffs
+    const projection = d3.geoMercator()
+        .scale(85)
+        .translate([width/2, height/2*1.3])
+
+    const path = d3.geoPath().projection(projection);
+
+    var b = path.bounds(pathGeometry); // [[left, top],[right, bottom]]
+    // console.log(b);
+	var c = d3.geoCentroid(pathGeometry);
+    // console.log(c);
+
+    svg.append("path")
+      .attr("d", path(pathGeometry))
+      .style("fill", "none")
+      .style("stroke", "orange")
+      .style("stroke-width", 7)
+	
+	
+}
+
+function main() {
+    runStreaks();
+    packedCountryCircles();
+    xkcdChart();
+    readGPXdata("A_grueling_recovery_run", "TomMarch");
+    //readGPXdata("OliverFeb", "TomFeb");
+    //readGPXdata("You_know_you_ve_made_it_when_your_phone_autocorrects_l_to_LVRC_", "With_Lakeview_Run_Club_Ryan");
+
+    new Waypoint({
+        element: document.getElementById('countryStep1'),
+        handler: function(direction) {
+            const opacity = direction == 'down' ? .75 : 0;
+            d3.selectAll('.countryCircle1').transition().duration(1000).style('opacity', opacity);
+        },
+        context: document.getElementById('entries'),
+        offset: '50%'
+    });
+    new Waypoint({
+        element: document.getElementById('countryStep2'),
+        handler: function(direction) {
+            const opacity = direction == 'down' ? .75 : 0;
+            d3.selectAll('.countryCircle2').transition().duration(1000).style('opacity', opacity);
+        },
+        context: document.getElementById('entries'),
+        offset: '50%'
+    });
+    new Waypoint({
+        element: document.getElementById('countryStep3'),
+        handler: function(direction) {
+            const opacity = direction == 'down' ? .75 : 0;
+            d3.selectAll('.countryCircle3').transition().duration(1000).style('opacity', opacity);
+        },
+        context: document.getElementById('entries'),
+        offset: '50%'
+    });
+    new Waypoint({
+        element: document.getElementById('countryStep4'),
+        handler: function(direction) {
+            const opacity = direction == 'down' ? .75 : 0;
+            d3.selectAll('.countryCircle4').transition().duration(1000).style('opacity', opacity);
+        },
+        context: document.getElementById('entries'),
+        offset: '50%'
+    });
+}
+
+main();
