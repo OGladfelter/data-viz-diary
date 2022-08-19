@@ -250,12 +250,14 @@ function mapGPXfiles(data, data2, coords, coords2) {
     var polyline = L.polyline(coords, {
         color: primaryColor,
         weight: 2,
-        smoothFactor: 1
+        smoothFactor: 1,
+        opacity: 0.8
     });
     var polyline2 = L.polyline(coords2, {
         color: secondaryColor,
         weight: 2,
-        smoothFactor: 1
+        smoothFactor: 1,
+        opacity: 0.8
     })
 
     var map = L.map('flybyMap');
@@ -307,7 +309,7 @@ function mapGPXfiles(data, data2, coords, coords2) {
     var dur = 100;
 
     // this is not very performant
-    for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=2, z++) {
+    for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=4, z++) {
         var latLon1 = [latScale(i), lonScale(i)];
         var layerPoint1 = map.latLngToLayerPoint(latLon1);
         var latLon2 = [latScale2(i), lonScale2(i)];
@@ -334,7 +336,6 @@ function main() {
     xkcdChart();
     readGPXdata("A_grueling_recovery_run", "TomMarch");
     //readGPXdata("OliverFeb", "TomFeb");
-    //readGPXdata("You_know_you_ve_made_it_when_your_phone_autocorrects_l_to_LVRC_", "With_Lakeview_Run_Club_Ryan");
 
     new Waypoint({
         element: document.getElementById('countryStep1'),
