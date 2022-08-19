@@ -308,26 +308,34 @@ function mapGPXfiles(data, data2, coords, coords2) {
 
     var dur = 100;
 
-    // this is not very performant
-    for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=4, z++) {
-        var latLon1 = [latScale(i), lonScale(i)];
-        var layerPoint1 = map.latLngToLayerPoint(latLon1);
-        var latLon2 = [latScale2(i), lonScale2(i)];
-        var layerPoint2 = map.latLngToLayerPoint(latLon2);
-        oliverCircle
-            .transition()
-            .duration(dur)
-            .delay(dur / 5 * z)
-            .attr('cx', layerPoint1.x)
-            .attr('cy', layerPoint1.y);
-        tomCircle
-            .transition()
-            .duration(dur)
-            .delay(dur / 5 * z)
-            .attr('cx', layerPoint2.x)
-            .attr('cy', layerPoint2.y);
-        console.log(z);
+    new Waypoint({
+        element: document.getElementById('flybyMap'),
+        handler: function(direction) {
+            if (direction == 'down') {
+                // this is not very performant
+                for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=4, z++) {
+                    var latLon1 = [latScale(i), lonScale(i)];
+                    var layerPoint1 = map.latLngToLayerPoint(latLon1);
+                    var latLon2 = [latScale2(i), lonScale2(i)];
+                    var layerPoint2 = map.latLngToLayerPoint(latLon2);
+                    oliverCircle
+                        .transition()
+                        .duration(dur)
+                        .delay(dur / 5 * z)
+                        .attr('cx', layerPoint1.x)
+                        .attr('cy', layerPoint1.y);
+                    tomCircle
+                        .transition()
+                        .duration(dur)
+                        .delay(dur / 5 * z)
+                        .attr('cx', layerPoint2.x)
+                        .attr('cy', layerPoint2.y);
+            }
     };
+        },
+        context: document.getElementById('entries'),
+        offset: 'bottom-in-view'
+    });
 }
 
 function main() {

@@ -177,3 +177,6 @@ div.tooltip {
     opacity: 0;
 }
 
+.leaflet-container {
+    background: none !important;
+}
