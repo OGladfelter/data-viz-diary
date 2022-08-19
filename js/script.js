@@ -283,7 +283,7 @@ function mapGPXfiles(data, data2, coords, coords2) {
 
     var oliverCircle = g.append("circle")
         .style("stroke", "black")  
-        .style("opacity", .6) 
+        .style("opacity", 0) 
         .style("fill", primaryColor)
         .attr("r", 10)
         .attr('cx', map.latLngToLayerPoint(data[0].latLon).x)
@@ -291,7 +291,7 @@ function mapGPXfiles(data, data2, coords, coords2) {
 
     var tomCircle = g.append("circle")
         .style("stroke", "black")  
-        .style("opacity", .6) 
+        .style("opacity", 0) 
         .style("fill", secondaryColor)
         .attr("r", 10)
         .attr('cx', map.latLngToLayerPoint(data2[0].latLon).x)
@@ -312,6 +312,8 @@ function mapGPXfiles(data, data2, coords, coords2) {
         element: document.getElementById('flybyMap'),
         handler: function(direction) {
             if (direction == 'down') {
+                oliverCircle.style('opacity', 0.7);
+                tomCircle.style('opacity', 0.7);
                 // this is not very performant
                 for (var i = minMaxTimeStamps[0].getTime() / 1000, z = 0; i < minMaxTimeStamps[1].getTime() / 1000; i+=4, z++) {
                     var latLon1 = [latScale(i), lonScale(i)];
