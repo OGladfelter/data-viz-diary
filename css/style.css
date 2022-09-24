@@ -17,7 +17,7 @@ body {
 }
 
 .entries {
-    height: 85vh;
+    height: 95vh;
     background-color: whitesmoke;
     overflow-y: scroll;
     width: 75vw;

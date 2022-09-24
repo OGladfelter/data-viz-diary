@@ -73,63 +73,29 @@
 			</div>
 			<div class="entry">
 				<article>
-					<p>March 6, 2022</p>
+					<p>April 22, 2022</p>
 					<div>
 						<div style="width:50%; float:right; position:sticky; top:0;">
-							<div id="viz0"></div>
+							<div id="pieChart"></div>
 						</div>
 						<div style="width:50%;">
 							<article>
-								<p>I'm thinking about writing a book. They say you should write about what you know.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
+								<p>Ahhhhh I spent so much of today mindlessly refreshing my email inbox, wandering into the kitchen to see if any snacks had magically appeared since I last checked (nope, the fridge is still empty...), and chasing endorphins by checking my phone (turns out that only works when people actually text you).</p>
+								<p>To be fair, I did get some work done...but that was in the like 8 percent of the day I could actually get myself to focus 🤷</p>
+								<p>But seriously, do other people struggle to focus as much as I do these days? Is this just the new "work from home" norm, or is everyone else outpacing me with how much work they can get done while I'm busy staring out the window and looking for my laptop charger?</p>
+								<p>I imagine most of my coworkers also spend time looking at their phone or taking breaks, but still probably do a better job at budgeting their time...</p>
+								<div id="pieChart2"></div>
 							</article>
 						</div>
 					</div>
 				</article>
 			</div>
-			<div class="entry">
-				<article>
-					<p>March 8, 2022</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut. Amet est placerat in egestas erat imperdiet sed euismod nisi. Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices. A pellentesque sit amet porttitor eget dolor. Tortor dignissim convallis aenean et tortor. Aliquam faucibus purus in massa tempor nec. Ultricies leo integer malesuada nunc vel risus commodo viverra. Quisque non tellus orci ac auctor augue mauris augue. Cursus vitae congue mauris rhoncus. Justo laoreet sit amet cursus. Velit laoreet id donec ultrices tincidunt arcu. In massa tempor nec feugiat nisl pretium. Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Gravida cum sociis natoque penatibus et magnis dis. Tincidunt id aliquet risus feugiat in ante metus dictum at.</p>
-				</article>
-				<div id="viz1"></div>
-				<script>
-					// create Bar chart from csv file, using default options
-					new roughViz.Bar({
-						element: '#viz0', // container selection
-						data: 'https://raw.githubusercontent.com/jwilber/random_data/master/flavors.csv',
-						labels: 'flavor',
-						values: 'price'
-					});
-
-					// create Donut chart using defined data & customize plot options
-					new roughViz.Donut(
-					{
-						element: '#viz1',
-						data: {
-						labels: ['North', 'South', 'East', 'West'],
-						values: [10, 5, 8, 3]
-						},
-						title: "Regions",
-						width: window.innerWidth / 4,
-						roughness: 8,
-						colors: ['red', 'orange', 'blue', 'skyblue'],
-						stroke: 'black',
-						strokeWidth: 3,
-						fillStyle: 'cross-hatch',
-						fillWeight: 3.5,
-					}
-					);
-				</script>
-			</div>
 		</div>
-		<div style="width:50%; text-align:center; margin:auto;">
+		<!-- <div style="width:50%; text-align:center; margin:auto;">
 			<button>&larr; Previous page</button>
 			<button>Random entry</button>
 			<button>Next page &rarr;</button>
-		</div>
+		</div> -->
 
 
 		<script src="js/script.js"></script>

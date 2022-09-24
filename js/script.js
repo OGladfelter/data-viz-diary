@@ -336,12 +336,60 @@ function mapGPXfiles(data, data2, coords, coords2) {
     });
 }
 
+function drawPie() {
+    // create Donut chart using defined data & customize plot options
+    new roughViz.Donut(
+        {
+            element: '#pieChart',
+            data: {
+                labels: ['Checking Gmail', 'On my phone', 'Snacking', 'Actual work'],
+                values: [20, 49, 23, 8]
+            },
+            title: "How I Spend My Day [%]",
+            width: window.innerWidth / 4,
+            roughness: 2,
+            colors: ['red', 'orange', 'blue', 'skyblue'],
+            stroke: 'black',
+            strokeWidth: 3,
+            fillStyle: 'hachure',
+            fillWeight: 3,
+            legendPosition: 'left',
+            titleFontSize: '1.5rem',
+            margin: {top: 70, right: 0, bottom: 0, left: 0}
+        }
+    );
+    new roughViz.Donut(
+        {
+            element: '#pieChart2',
+            data: {
+                labels: ['Checking Gmail', 'On their phone', 'Snacking', 'Actual work'],
+                values: [14, 19, 2, 65]
+            },
+            title: "How Others Spend Their Day?",
+            width: window.innerWidth / 4,
+            roughness: 2,
+            colors: ['red', 'orange', 'blue', 'skyblue'],
+            stroke: 'black',
+            strokeWidth: 3,
+            fillStyle: 'hachure',
+            fillWeight: 3,
+            legendPosition: 'left',
+            titleFontSize: '1.5rem',
+            margin: {top: 70, right: 0, bottom: 0, left: 0}
+        }
+    );
+    const legend = document.querySelector('.roughpieChart');
+    legend.style.transform = 'translate(0px, 10px)';
+    const legend2 = document.querySelector('.roughpieChart2');
+    legend2.style.transform = 'translate(0px, 10px)';
+}
+
 function main() {
     runStreaks();
     packedCountryCircles();
     xkcdChart();
     readGPXdata("A_grueling_recovery_run", "TomMarch");
-    //readGPXdata("OliverFeb", "TomFeb");
+    drawPie();
 
     new Waypoint({
         element: document.getElementById('countryStep1'),
